@@ -1,3 +1,4 @@
 <resources>
-    <string name="app_name">MeLi</string>
+    <string name="app_name">MercadoLibre Mobile Candidate</string>
+    <string name="search_hint">Buscar productos, marcas y más…</string>
 </resources>
