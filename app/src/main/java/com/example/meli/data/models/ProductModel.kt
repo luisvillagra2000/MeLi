@@ -1,4 +1,13 @@
 package com.example.meli.data.models
 
-class ProductModel {
-}
+data class ProductModel(
+    val id: String,
+    val title: String,
+    val thumbnail: String,
+    val permalink: String,
+    val currency_id: String,
+    val price: Double,
+    val pictures: List<Pictures>? = null
+)
+
+data class Pictures(val url: String)

@@ -7,7 +7,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.navArgs
+import com.example.meli.R
 import com.example.meli.databinding.FragmentProductDetailsBinding
+import com.example.meli.ui.viewmodels.ApiStatus
 import com.example.meli.ui.viewmodels.ProductViewModel
 
 class ProductDetailsFragment : Fragment() {
@@ -18,6 +20,7 @@ class ProductDetailsFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewModel = ViewModelProvider(this)[ProductViewModel::class.java]
+        viewModel.getProduct(args.productId)
     }
 
     override fun onCreateView(
@@ -25,7 +28,27 @@ class ProductDetailsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentProductDetailsBinding.inflate(layoutInflater)
-                binding.productId.text = args.productId
-                return binding.root
+        viewModel.status.observe(viewLifecycleOwner) {
+            when (it) {
+                ApiStatus.LOADING -> {
+                    binding.statusImage.visibility = View.VISIBLE
+                    binding.statusImage.setImageResource(R.drawable.loading_animation)
+                }
+
+                ApiStatus.ERROR -> {
+                    binding.statusImage.visibility = View.VISIBLE
+                    binding.statusImage.setImageResource(R.drawable.ic_connection_error)
+                }
+
+                ApiStatus.DONE -> {
+                    binding.statusImage.visibility = View.GONE
+                }
+            }
+        }
+        viewModel.productSelected.observe(viewLifecycleOwner) {
+            binding.productId.text = it?.title
+        }
+
+        return binding.root
     }
 }

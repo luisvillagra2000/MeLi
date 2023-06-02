@@ -9,7 +9,6 @@ import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import com.example.meli.databinding.FragmentProductSearchBinding
 import com.example.meli.ui.viewmodels.ProductViewModel
-import com.squareup.picasso.Picasso
 
 class ProductSearchFragment : Fragment() {
 
@@ -26,7 +25,19 @@ class ProductSearchFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentProductSearchBinding.inflate(layoutInflater)
-        binding.searchBtn.setOnClickListener{ findNavController().navigate(ProductSearchFragmentDirections.actionProductsList())}
+        binding.searchBtn.setOnClickListener {
+            val search = binding.searchText.text.toString()
+            if (validateSearch(search))
+                findNavController().navigate(
+                    ProductSearchFragmentDirections.actionProductsList(
+                        search
+                    )
+                )
+        }
         return binding.root
+    }
+
+    private fun validateSearch(search: String): Boolean {
+        return true
     }
 }

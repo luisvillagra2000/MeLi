@@ -4,15 +4,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.fragments.ProductSearchFragment"
+    android:gravity="center"
     android:orientation="horizontal"
-    android:gravity="center">
+    tools:context=".ui.fragments.ProductSearchFragment">
+
     <EditText
         android:id="@+id/search_text"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:hint="@string/search_hint"/>
+        android:hint="@string/search_hint" />
 
     <ImageButton
         android:id="@+id/search_btn"

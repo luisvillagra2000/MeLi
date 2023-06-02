@@ -3,15 +3,18 @@ package com.example.meli.ui.adapters
 import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.net.toUri
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
+import coil.load
+import com.example.meli.R
+import com.example.meli.data.models.ProductModel
 import com.example.meli.databinding.ProductItemBinding
-import com.example.meli.ui.viewmodels.ProductItem
-import com.squareup.picasso.Picasso
 
 
 class ProductsRecyclerViewAdapter(
-    private val values: List<ProductItem>,
     private val onProductClick: (itemId: String) -> Unit
-) : RecyclerView.Adapter<ProductViewHolder>() {
+) : ListAdapter<ProductModel, ProductViewHolder>(DiffCallback) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProductViewHolder {
         return ProductViewHolder(
@@ -24,17 +27,32 @@ class ProductsRecyclerViewAdapter(
     }
 
     override fun onBindViewHolder(holder: ProductViewHolder, position: Int) {
-        holder.bind(values[position], onProductClick)
+        holder.bind(getItem(position), onProductClick)
     }
 
-    override fun getItemCount(): Int = values.size
+
+    companion object DiffCallback : DiffUtil.ItemCallback<ProductModel>() {
+        override fun areItemsTheSame(oldItem: ProductModel, newItem: ProductModel): Boolean {
+            return oldItem.id == newItem.id
+        }
+
+        override fun areContentsTheSame(oldItem: ProductModel, newItem: ProductModel): Boolean {
+            return oldItem.permalink == newItem.permalink
+        }
+    }
 }
 
 class ProductViewHolder(val binding: ProductItemBinding) : RecyclerView.ViewHolder(binding.root) {
-    fun bind(item: ProductItem, onClick: (itemId: String) -> Unit) {
-        Picasso.get().load(item.imageUrl).into(binding.productImage)
+
+    fun bind(item: ProductModel, onClick: (itemId: String) -> Unit) {
+        val imgUri = item.thumbnail.replace("http://", "https://").toUri()
+        binding.productImage.load(imgUri) {
+            placeholder(R.drawable.loading_animation)
+            error(R.drawable.ic_broken_image)
+        }
         binding.productTitle.text = item.title
-        binding.productPrice.text = item.price
-        binding.root.setOnClickListener { onClick(item.title) }
+        binding.productPrice.text = item.currency_id + item.price
+        binding.root.setOnClickListener { onClick(item.id) }
     }
 }
+
