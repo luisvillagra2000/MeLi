@@ -1,4 +1,9 @@
 <resources>
     <string name="app_name">MercadoLibre Mobile Candidate</string>
+    <string name="country">País:</string>
+    <string name="error_text_blank">El campo de búsqueda está vacío</string>
+    <string name="error_country_blank">Debe seleccionar un país</string>
     <string name="search_hint">Buscar productos, marcas y más…</string>
+    <string name="search_button">Buscar</string>
+    <string name="show_more">Ver más detalles</string>
 </resources>

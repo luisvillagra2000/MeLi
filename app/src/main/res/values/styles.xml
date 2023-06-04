@@ -8,4 +8,9 @@
     <style name="TextStyle.Bold">
         <item name="android:textStyle">bold</item>
     </style>
+
+    <style name="ButtonStyle" parent="@android:style/Widget.Button">
+        <item name="android:textColor">@android:color/white</item>
+        <item name="backgroundTint">@color/ml_light_blue</item>
+    </style>
 </resources>

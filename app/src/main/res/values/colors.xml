@@ -2,6 +2,7 @@
 <resources>
     <color name="ic_launcher_background">@color/ml_yellow</color>
     <color name="ml_blue">#2D3277</color>
+    <color name="ml_light_blue">#3483fA</color>
     <color name="ml_yellow">#FFE600</color>
     <color name="ml_yellow_variant">#EAD301</color>
 </resources>

@@ -11,7 +11,6 @@ import com.example.meli.R
 import com.example.meli.data.models.ProductModel
 import com.example.meli.databinding.ProductItemBinding
 
-
 class ProductsRecyclerViewAdapter(
     private val onProductClick: (itemId: String) -> Unit
 ) : ListAdapter<ProductModel, ProductViewHolder>(DiffCallback) {
@@ -30,23 +29,20 @@ class ProductsRecyclerViewAdapter(
         holder.bind(getItem(position), onProductClick)
     }
 
-
     companion object DiffCallback : DiffUtil.ItemCallback<ProductModel>() {
-        override fun areItemsTheSame(oldItem: ProductModel, newItem: ProductModel): Boolean {
-            return oldItem.id == newItem.id
-        }
+        override fun areItemsTheSame(oldItem: ProductModel, newItem: ProductModel) =
+            oldItem.id == newItem.id
 
-        override fun areContentsTheSame(oldItem: ProductModel, newItem: ProductModel): Boolean {
-            return oldItem.permalink == newItem.permalink
-        }
+        override fun areContentsTheSame(oldItem: ProductModel, newItem: ProductModel) =
+            oldItem.permalink == newItem.permalink
     }
 }
 
 class ProductViewHolder(val binding: ProductItemBinding) : RecyclerView.ViewHolder(binding.root) {
 
     fun bind(item: ProductModel, onClick: (itemId: String) -> Unit) {
-        val imgUri = item.thumbnail.replace("http://", "https://").toUri()
-        binding.productImage.load(imgUri) {
+        val imageUri = item.thumbnail.replace("http://", "https://").toUri()
+        binding.productImage.load(imageUri) {
             placeholder(R.drawable.loading_animation)
             error(R.drawable.ic_broken_image)
         }

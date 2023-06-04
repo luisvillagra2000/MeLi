@@ -11,19 +11,19 @@ import androidx.navigation.fragment.navArgs
 import com.example.meli.R
 import com.example.meli.databinding.FragmentProductsListBinding
 import com.example.meli.ui.adapters.ProductsRecyclerViewAdapter
-import com.example.meli.ui.viewmodels.ApiStatus
-import com.example.meli.ui.viewmodels.ProductViewModel
+import com.example.meli.ui.viewmodels.ProductsListScreenStatus
+import com.example.meli.ui.viewmodels.ProductsListViewModel
 
-class ProductListFragment : Fragment() {
+class ProductsListFragment : Fragment() {
 
     private lateinit var binding: FragmentProductsListBinding
-    private lateinit var viewModel: ProductViewModel
-    val args: ProductListFragmentArgs by navArgs()
+    private lateinit var viewModel: ProductsListViewModel
+    val args: ProductsListFragmentArgs by navArgs()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel = ViewModelProvider(this)[ProductViewModel::class.java]
-        viewModel.getProductFiltered(args.ItemToSearch)
+        viewModel = ViewModelProvider(this)[ProductsListViewModel::class.java]
+        viewModel.getProductFiltered(args.siteId, args.itemToSearch)
     }
 
     override fun onCreateView(
@@ -31,34 +31,42 @@ class ProductListFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentProductsListBinding.inflate(layoutInflater)
-        val view = binding.root
+        setStatusObserver()
+        initView()
+        return binding.root
+    }
+
+    private fun setStatusObserver() {
         viewModel.status.observe(viewLifecycleOwner) {
             when (it) {
-                ApiStatus.LOADING -> {
+                ProductsListScreenStatus.LOADING -> {
                     binding.statusImage.visibility = View.VISIBLE
                     binding.statusImage.setImageResource(R.drawable.loading_animation)
                 }
 
-                ApiStatus.ERROR -> {
+                ProductsListScreenStatus.ERROR -> {
                     binding.statusImage.visibility = View.VISIBLE
                     binding.statusImage.setImageResource(R.drawable.ic_connection_error)
                 }
 
-                ApiStatus.DONE -> {
+                ProductsListScreenStatus.DONE -> {
                     binding.statusImage.visibility = View.GONE
                 }
             }
         }
-        val adapter = ProductsRecyclerViewAdapter {
-            findNavController().navigate(ProductListFragmentDirections.actionProductDetails(it))
+    }
+
+    private fun initView() {
+        binding.swipeRefresh.setOnRefreshListener {
+            viewModel.getProductFiltered(args.siteId, args.itemToSearch)
+            binding.swipeRefresh.isRefreshing = false
         }
+        val adapter = ProductsRecyclerViewAdapter {
+            findNavController().navigate(ProductsListFragmentDirections.actionProductDetails(it))
+        }
+        binding.productList.adapter = adapter
         viewModel.products.observe(viewLifecycleOwner) {
             adapter.submitList(it)
         }
-        binding.productList.adapter = adapter
-
-
-        return view
     }
-
 }
