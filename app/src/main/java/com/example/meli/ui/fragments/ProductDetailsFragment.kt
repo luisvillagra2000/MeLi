@@ -20,7 +20,7 @@ class ProductDetailsFragment : Fragment() {
 
     private lateinit var binding: FragmentProductDetailsBinding
     private lateinit var viewModel: ProductDetailsViewModel
-    val args: ProductDetailsFragmentArgs by navArgs()
+    private val args: ProductDetailsFragmentArgs by navArgs()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,17 +44,24 @@ class ProductDetailsFragment : Fragment() {
                 ProductDetailsScreenStatus.LOADING -> {
                     binding.statusImage.visibility = View.VISIBLE
                     binding.statusImage.setImageResource(R.drawable.loading_animation)
+                    binding.productImagePager.visibility = View.GONE
+                    binding.productTitle.visibility = View.GONE
+                    binding.productPrice.visibility = View.GONE
                     binding.showMore.visibility = View.GONE
                 }
-
                 ProductDetailsScreenStatus.ERROR -> {
                     binding.statusImage.visibility = View.VISIBLE
                     binding.statusImage.setImageResource(R.drawable.ic_connection_error)
+                    binding.productImagePager.visibility = View.GONE
+                    binding.productTitle.visibility = View.GONE
+                    binding.productPrice.visibility = View.GONE
                     binding.showMore.visibility = View.GONE
                 }
-
                 ProductDetailsScreenStatus.DONE -> {
                     binding.statusImage.visibility = View.GONE
+                    binding.productImagePager.visibility = View.VISIBLE
+                    binding.productTitle.visibility = View.VISIBLE
+                    binding.productPrice.visibility = View.VISIBLE
                     binding.showMore.visibility = View.VISIBLE
                 }
             }

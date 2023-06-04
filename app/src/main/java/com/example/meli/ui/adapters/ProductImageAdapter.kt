@@ -13,19 +13,16 @@ import com.example.meli.databinding.ProductImageItemBinding
 
 class ProductImageAdapter : ListAdapter<Pictures, ProductImageViewHolder>(DiffCallback) {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProductImageViewHolder {
-        return ProductImageViewHolder(
-            ProductImageItemBinding.inflate(
-                LayoutInflater.from(parent.context),
-                parent,
-                false
-            )
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = ProductImageViewHolder(
+        ProductImageItemBinding.inflate(
+            LayoutInflater.from(parent.context),
+            parent,
+            false
         )
-    }
+    )
 
-    override fun onBindViewHolder(holder: ProductImageViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: ProductImageViewHolder, position: Int) =
         holder.bind(getItem(position).url)
-    }
 
     companion object DiffCallback : DiffUtil.ItemCallback<Pictures>() {
         override fun areItemsTheSame(oldItem: Pictures, newItem: Pictures) =
@@ -36,7 +33,7 @@ class ProductImageAdapter : ListAdapter<Pictures, ProductImageViewHolder>(DiffCa
     }
 }
 
-class ProductImageViewHolder(val binding: ProductImageItemBinding) :
+class ProductImageViewHolder(private val binding: ProductImageItemBinding) :
     RecyclerView.ViewHolder(binding.root) {
 
     fun bind(imageUrlString: String) {

@@ -11,23 +11,19 @@ import com.example.meli.R
 import com.example.meli.data.models.ProductModel
 import com.example.meli.databinding.ProductItemBinding
 
-class ProductsRecyclerViewAdapter(
-    private val onProductClick: (itemId: String) -> Unit
-) : ListAdapter<ProductModel, ProductViewHolder>(DiffCallback) {
+class ProductsRecyclerViewAdapter(private val onProductClick: (itemId: String) -> Unit) :
+    ListAdapter<ProductModel, ProductViewHolder>(DiffCallback) {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProductViewHolder {
-        return ProductViewHolder(
-            ProductItemBinding.inflate(
-                LayoutInflater.from(parent.context),
-                parent,
-                false
-            )
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = ProductViewHolder(
+        ProductItemBinding.inflate(
+            LayoutInflater.from(parent.context),
+            parent,
+            false
         )
-    }
+    )
 
-    override fun onBindViewHolder(holder: ProductViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: ProductViewHolder, position: Int) =
         holder.bind(getItem(position), onProductClick)
-    }
 
     companion object DiffCallback : DiffUtil.ItemCallback<ProductModel>() {
         override fun areItemsTheSame(oldItem: ProductModel, newItem: ProductModel) =
@@ -38,7 +34,8 @@ class ProductsRecyclerViewAdapter(
     }
 }
 
-class ProductViewHolder(val binding: ProductItemBinding) : RecyclerView.ViewHolder(binding.root) {
+class ProductViewHolder(private val binding: ProductItemBinding) :
+    RecyclerView.ViewHolder(binding.root) {
 
     fun bind(item: ProductModel, onClick: (itemId: String) -> Unit) {
         val imageUri = item.thumbnail.replace("http://", "https://").toUri()

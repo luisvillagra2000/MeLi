@@ -1,4 +1,4 @@
-package com.example.meli.data.repositorys;
+package com.example.meli.data.apiservice;
 
 import com.example.meli.data.models.ProductModel
 import com.example.meli.data.models.SiteModel
@@ -11,7 +11,6 @@ import retrofit2.http.Path
 import retrofit2.http.Query
 
 private const val BASE_URL = "https://api.mercadolibre.com/"
-private const val SITE_ID = "MLA"
 
 private val moshi = Moshi.Builder()
     .add(KotlinJsonAdapterFactory())
@@ -24,7 +23,9 @@ private val retrofit = Retrofit.Builder()
 
 interface ProductsApiService {
     @GET("/sites/{site_id}/search")
-    suspend fun getProductsFiltered(@Path(value = "site_id", encoded = true) siteId : String, @Query("q") ItemToSearch: String): ProductsFilterResponse
+    suspend fun getProductsFiltered(
+        @Path(value = "site_id", encoded = true) siteId : String,
+        @Query("q") ItemToSearch: String): ProductsFilterResponse
 
     @GET("/items")
     suspend fun getProduct(@Query("ids") id: String): List<ProductsByIdResponse>
@@ -36,6 +37,7 @@ interface ProductsApiService {
 data class ProductsFilterResponse(val results: List<ProductModel>)
 
 data class ProductsByIdResponse(val body: ProductModel)
+
 object ProductApi {
     val retrofitService: ProductsApiService by lazy { retrofit.create(ProductsApiService::class.java) }
 }

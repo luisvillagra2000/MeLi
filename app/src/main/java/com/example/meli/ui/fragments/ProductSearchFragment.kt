@@ -55,9 +55,7 @@ class ProductSearchFragment : Fragment() {
         binding.searchButton.setOnClickListener {
             val search = binding.searchText.text.toString()
             if (validateSearch(search)) {
-                val siteSelected =
-                    viewModel.sites.value?.find { it.name == binding.sitesSpinner.selectedItem.toString() }?.id
-                        ?: "MLA"
+                val siteSelected = viewModel.sites.value?.find { it.name == binding.sitesSpinner.selectedItem.toString() }?.id!!
                 findNavController().navigate(
                     ProductSearchFragmentDirections.actionProductsList(
                         sanitizeInput(search),
@@ -78,7 +76,6 @@ class ProductSearchFragment : Fragment() {
                     binding.searchText.visibility = View.GONE
                     binding.searchButton.visibility = View.GONE
                 }
-
                 ProductSearchScreenStatus.ERROR -> {
                     binding.statusImage.visibility = View.VISIBLE
                     binding.statusImage.setImageResource(R.drawable.ic_connection_error)
@@ -86,7 +83,6 @@ class ProductSearchFragment : Fragment() {
                     binding.searchText.visibility = View.GONE
                     binding.searchButton.visibility = View.GONE
                 }
-
                 ProductSearchScreenStatus.DONE -> {
                     binding.statusImage.visibility = View.GONE
                     binding.sitesLayout.visibility = View.VISIBLE

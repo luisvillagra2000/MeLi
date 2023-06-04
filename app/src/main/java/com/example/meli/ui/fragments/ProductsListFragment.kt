@@ -18,7 +18,7 @@ class ProductsListFragment : Fragment() {
 
     private lateinit var binding: FragmentProductsListBinding
     private lateinit var viewModel: ProductsListViewModel
-    val args: ProductsListFragmentArgs by navArgs()
+    private val args: ProductsListFragmentArgs by navArgs()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,15 +42,16 @@ class ProductsListFragment : Fragment() {
                 ProductsListScreenStatus.LOADING -> {
                     binding.statusImage.visibility = View.VISIBLE
                     binding.statusImage.setImageResource(R.drawable.loading_animation)
+                    binding.productList.visibility = View.GONE
                 }
-
                 ProductsListScreenStatus.ERROR -> {
                     binding.statusImage.visibility = View.VISIBLE
                     binding.statusImage.setImageResource(R.drawable.ic_connection_error)
+                    binding.productList.visibility = View.GONE
                 }
-
                 ProductsListScreenStatus.DONE -> {
                     binding.statusImage.visibility = View.GONE
+                    binding.productList.visibility = View.VISIBLE
                 }
             }
         }
