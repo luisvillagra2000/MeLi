@@ -7,6 +7,13 @@ import com.example.meli.data.models.SiteModel
 import com.example.meli.data.apiservice.ProductApi
 import kotlinx.coroutines.launch
 
+/**
+ * Este ViewModel mantiene el estado de la pantalla de búsqueda de un productos y de consultar
+ * los sitios en donde MercadoLibre ofrece servicio a la clase ProductApiService.kt
+ *
+ * This ViewModel maintains the state of the search screen for a product and consulting
+ * the sites where Mercadolibre offers service to the ProductApiService.kt class
+ */
 class ProductSearchViewModel : ViewModel() {
     val status = MutableLiveData<ProductSearchScreenStatus>()
     val sites = MutableLiveData<List<SiteModel>>()

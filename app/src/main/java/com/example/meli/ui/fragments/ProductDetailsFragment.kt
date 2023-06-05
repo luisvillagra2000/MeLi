@@ -16,6 +16,13 @@ import com.example.meli.ui.viewmodels.ProductDetailsScreenStatus
 import com.example.meli.ui.viewmodels.ProductDetailsViewModel
 import com.google.android.material.tabs.TabLayoutMediator
 
+/**
+ * Este fragment crea una vista que contiene detalles del producto. Los detalles que se muestran son:
+ * una lista de imagenes, titulo, precio y contiene un botón para navegar a la web/app de MercadoLibre
+ *
+ * This fragment creates a view that contains product details. The details shown are:
+ * a list of images, title, price and contains a button to navigate to the MercadoLibre website/app
+ */
 class ProductDetailsFragment : Fragment() {
 
     private lateinit var binding: FragmentProductDetailsBinding
@@ -38,6 +45,13 @@ class ProductDetailsFragment : Fragment() {
         return binding.root
     }
 
+    /**
+     * setStatusObserver() se encarga de manipular la visibilidad de objetos
+     * dependiendo del estado de la pantalla
+     *
+     * setStatusObserver() is responsible for manipulating the visibility of objects
+     * depending on the screen's state
+     */
     private fun setStatusObserver() {
         viewModel.status.observe(viewLifecycleOwner) {
             when (it) {
@@ -64,10 +78,16 @@ class ProductDetailsFragment : Fragment() {
                     binding.productPrice.visibility = View.VISIBLE
                     binding.showMore.visibility = View.VISIBLE
                 }
+                null -> {}
             }
         }
     }
 
+    /**
+     * initView() crea el adapter, setea los datos y comportamientos de pantalla
+     *
+     * initView() creates the adapter, set the screen data and behaviors
+     */
     private fun initView() {
         val adapter = ProductImageAdapter()
         binding.productImagePager.adapter = adapter

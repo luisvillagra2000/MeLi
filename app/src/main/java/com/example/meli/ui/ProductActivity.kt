@@ -8,6 +8,11 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import com.example.meli.R
 
+/**
+ * Esta activity se encarga de contener los fragmentos ProductSearchFragment, ProductsListFragment y ProductDetailsFragment
+ *
+ * This Activity is responsible for containing the ProductSearchFragment, ProductsListFragment and ProductDetailsFragment fragments
+ */
 class ProductActivity : AppCompatActivity() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration

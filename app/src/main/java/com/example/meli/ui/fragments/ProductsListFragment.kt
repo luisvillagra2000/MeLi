@@ -14,6 +14,13 @@ import com.example.meli.ui.adapters.ProductsRecyclerViewAdapter
 import com.example.meli.ui.viewmodels.ProductsListScreenStatus
 import com.example.meli.ui.viewmodels.ProductsListViewModel
 
+/**
+ * Este fragment se encarga de mostrar la lista de los resultados de una búsqueda
+ * en productos de MercadoLibre de país
+ *
+ * This fragment is responsible for showing the list of the results of
+ * a MercadoLibre's products of a country
+ */
 class ProductsListFragment : Fragment() {
 
     private lateinit var binding: FragmentProductsListBinding
@@ -36,6 +43,13 @@ class ProductsListFragment : Fragment() {
         return binding.root
     }
 
+    /**
+     * setStatusObserver() se encarga de manipular la visibilidad de objetos
+     * dependiendo del estado de la pantalla
+     *
+     * setStatusObserver() is responsible for manipulating the visibility of objects
+     * depending on the screen's state
+     */
     private fun setStatusObserver() {
         viewModel.status.observe(viewLifecycleOwner) {
             when (it) {
@@ -53,10 +67,16 @@ class ProductsListFragment : Fragment() {
                     binding.statusImage.visibility = View.GONE
                     binding.productList.visibility = View.VISIBLE
                 }
+                null -> {}
             }
         }
     }
 
+    /**
+     * initView() crea el adapter, setea los datos y comportamientos de pantalla
+     *
+     * initView() creates the adapter, set the screen data and behaviors
+     */
     private fun initView() {
         binding.swipeRefresh.setOnRefreshListener {
             viewModel.getProductFiltered(args.siteId, args.itemToSearch)

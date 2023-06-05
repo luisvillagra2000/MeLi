@@ -11,3 +11,7 @@ data class ProductModel(
 )
 
 data class Pictures(val url: String)
+
+data class ProductsFilterResponse(val results: List<ProductModel>)
+
+data class ProductsByIdResponse(val body: ProductModel)

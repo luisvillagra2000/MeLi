@@ -7,6 +7,13 @@ import com.example.meli.data.models.ProductModel
 import com.example.meli.data.apiservice.ProductApi
 import kotlinx.coroutines.launch
 
+/**
+ * Este ViewModel mantiene el estado de la pantalla de búsqueda de un producto
+ * y de consultar los datos de un producto a la clase ProductApiService.kt
+ *
+ * This ViewModel maintains the state of the product detail screen and
+ * consulting the data of a product to the ProductApiService.kt class
+ */
 class ProductDetailsViewModel : ViewModel() {
     val status = MutableLiveData<ProductDetailsScreenStatus>()
     val productSelected = MutableLiveData<ProductModel?>()

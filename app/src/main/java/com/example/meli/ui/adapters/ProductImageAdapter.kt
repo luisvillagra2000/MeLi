@@ -11,6 +11,11 @@ import com.example.meli.R
 import com.example.meli.data.models.Pictures
 import com.example.meli.databinding.ProductImageItemBinding
 
+/**
+ * Este es el adapter es responsable de crear ítems que muestran imágenes desde una URL
+ *
+ * This is the Adapter is responsible for creating items that show images from a URL
+ */
 class ProductImageAdapter : ListAdapter<Pictures, ProductImageViewHolder>(DiffCallback) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = ProductImageViewHolder(
@@ -37,6 +42,11 @@ class ProductImageViewHolder(private val binding: ProductImageItemBinding) :
     RecyclerView.ViewHolder(binding.root) {
 
     fun bind(imageUrlString: String) {
+        //Los links que empiezan con http no están funcionando, cree un parche
+        // (cambiando http por https) para poder mostrar las imagenes
+
+        //the links that start with http are not working, create a patch
+        // (changing http for https) to show the images
         val imageUri = imageUrlString.replace("http://", "https://").toUri()
         binding.root.load(imageUri) {
             placeholder(R.drawable.loading_animation)
