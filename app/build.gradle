@@ -2,6 +2,7 @@ plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
     id 'androidx.navigation.safeargs.kotlin'
+    id 'kotlin-android'
 }
 
 android {
@@ -56,6 +57,14 @@ dependencies {
     // Livedata
     implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.6.1'
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.1'
+
+    // Koin
+    implementation "io.insert-koin:koin-android:3.4.0"
+
+    // Koin Tests
+    testImplementation "io.insert-koin:koin-test:3.4.0"
+    testImplementation "io.insert-koin:koin-test-junit4:3.4.0"
+    testImplementation "org.mockito:mockito-inline:4.8.0"
 
     // Test libraries
     testImplementation 'junit:junit:4.13.2'

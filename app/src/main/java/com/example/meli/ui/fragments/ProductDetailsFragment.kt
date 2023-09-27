@@ -7,7 +7,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.navArgs
 import com.example.meli.R
 import com.example.meli.databinding.FragmentProductDetailsBinding
@@ -15,6 +14,7 @@ import com.example.meli.ui.adapters.ProductImageAdapter
 import com.example.meli.ui.viewmodels.ProductDetailsScreenStatus
 import com.example.meli.ui.viewmodels.ProductDetailsViewModel
 import com.google.android.material.tabs.TabLayoutMediator
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 /**
  * Este fragment crea una vista que contiene detalles del producto. Los detalles que se muestran son:
@@ -26,12 +26,11 @@ import com.google.android.material.tabs.TabLayoutMediator
 class ProductDetailsFragment : Fragment() {
 
     private lateinit var binding: FragmentProductDetailsBinding
-    private lateinit var viewModel: ProductDetailsViewModel
+    private val viewModel: ProductDetailsViewModel by viewModel()
     private val args: ProductDetailsFragmentArgs by navArgs()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel = ViewModelProvider(this)[ProductDetailsViewModel::class.java]
         viewModel.getProduct(args.productId)
     }
 

@@ -1,11 +1,10 @@
 package com.example.meli.ui.fragments
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.meli.R
@@ -13,6 +12,7 @@ import com.example.meli.databinding.FragmentProductsListBinding
 import com.example.meli.ui.adapters.ProductsRecyclerViewAdapter
 import com.example.meli.ui.viewmodels.ProductsListScreenStatus
 import com.example.meli.ui.viewmodels.ProductsListViewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 /**
  * Este fragment se encarga de mostrar la lista de los resultados de una búsqueda
@@ -24,12 +24,11 @@ import com.example.meli.ui.viewmodels.ProductsListViewModel
 class ProductsListFragment : Fragment() {
 
     private lateinit var binding: FragmentProductsListBinding
-    private lateinit var viewModel: ProductsListViewModel
+    private val viewModel: ProductsListViewModel by viewModel()
     private val args: ProductsListFragmentArgs by navArgs()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel = ViewModelProvider(this)[ProductsListViewModel::class.java]
         viewModel.getProductFiltered(args.siteId, args.itemToSearch)
     }
 

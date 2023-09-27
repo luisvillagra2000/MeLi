@@ -1,18 +1,18 @@
 package com.example.meli.ui.fragments
 
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.meli.R
 import com.example.meli.databinding.FragmentProductSearchBinding
 import com.example.meli.ui.viewmodels.ProductSearchScreenStatus
 import com.example.meli.ui.viewmodels.ProductSearchViewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 /**
  * Este fragment se encarga de obtener la información necesaria para realizar una búsqueda de productos.
@@ -24,11 +24,10 @@ import com.example.meli.ui.viewmodels.ProductSearchViewModel
 class ProductSearchFragment : Fragment() {
 
     private lateinit var binding: FragmentProductSearchBinding
-    private lateinit var viewModel: ProductSearchViewModel
+    private val viewModel: ProductSearchViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel = ViewModelProvider(this)[ProductSearchViewModel::class.java]
         viewModel.getSites()
     }
 
@@ -125,7 +124,7 @@ class ProductSearchFragment : Fragment() {
      * validateSearch() validates that the necessary fields for the search are not empty and
      * in case there are empty the funtion will show a message to the user
      */
-    private fun validateSearch() = if (binding.searchText.text.toString().isNullOrBlank()) {
+    private fun validateSearch() = if (binding.searchText.text.toString().isBlank()) {
         Toast.makeText(context, R.string.error_text_blank, Toast.LENGTH_SHORT).show()
         false
     } else if (binding.sitesSpinner.selectedItem.toString().isBlank()) {

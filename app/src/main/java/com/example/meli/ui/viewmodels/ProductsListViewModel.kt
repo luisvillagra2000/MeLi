@@ -3,8 +3,8 @@ package com.example.meli.ui.viewmodels
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.meli.data.apiservice.ProductsApi
 import com.example.meli.data.models.ProductModel
-import com.example.meli.data.apiservice.ProductApi
 import kotlinx.coroutines.launch
 
 /**
@@ -14,7 +14,7 @@ import kotlinx.coroutines.launch
  * This viewmodel maintains the status of the screen that shows the result of a search and
  * consulting the search data to the ProductApiService.kt class
  */
-class ProductsListViewModel : ViewModel() {
+class ProductsListViewModel(private val api: ProductsApi) : ViewModel() {
     val status = MutableLiveData<ProductsListScreenStatus>()
     val products = MutableLiveData<List<ProductModel>>()
 
@@ -22,7 +22,7 @@ class ProductsListViewModel : ViewModel() {
         status.value = ProductsListScreenStatus.LOADING
         try {
             products.value =
-                ProductApi.retrofitService.getProductsFiltered(
+                api.getProductsFiltered(
                     siteId,
                     ItemToSearch
                 ).results

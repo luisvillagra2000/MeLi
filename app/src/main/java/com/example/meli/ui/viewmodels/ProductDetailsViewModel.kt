@@ -3,8 +3,8 @@ package com.example.meli.ui.viewmodels
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.meli.data.apiservice.ProductsApi
 import com.example.meli.data.models.ProductModel
-import com.example.meli.data.apiservice.ProductApi
 import kotlinx.coroutines.launch
 
 /**
@@ -14,14 +14,14 @@ import kotlinx.coroutines.launch
  * This ViewModel maintains the state of the product detail screen and
  * consulting the data of a product to the ProductApiService.kt class
  */
-class ProductDetailsViewModel : ViewModel() {
+class ProductDetailsViewModel(private val api: ProductsApi) : ViewModel() {
     val status = MutableLiveData<ProductDetailsScreenStatus>()
     val productSelected = MutableLiveData<ProductModel?>()
 
     fun getProduct(id: String) = viewModelScope.launch {
         status.value = ProductDetailsScreenStatus.LOADING
         try {
-            productSelected.value = ProductApi.retrofitService.getProduct(id).first().body
+            productSelected.value = api.getProduct(id).first().body
             status.value = ProductDetailsScreenStatus.DONE
         } catch (e: Exception) {
             status.value = ProductDetailsScreenStatus.ERROR
