@@ -18,13 +18,13 @@ class ProductsListViewModel(private val api: ProductsApi) : ViewModel() {
     val status = MutableLiveData<ProductsListScreenStatus>()
     val products = MutableLiveData<List<ProductModel>>()
 
-    fun getProductFiltered(siteId: String, ItemToSearch: String) = viewModelScope.launch {
+    fun getProductFiltered(siteId: String, itemToSearch: String) = viewModelScope.launch {
         status.value = ProductsListScreenStatus.LOADING
         try {
             products.value =
                 api.getProductsFiltered(
                     siteId,
-                    ItemToSearch
+                    itemToSearch
                 ).results
             status.value = ProductsListScreenStatus.DONE
         } catch (e: Exception) {

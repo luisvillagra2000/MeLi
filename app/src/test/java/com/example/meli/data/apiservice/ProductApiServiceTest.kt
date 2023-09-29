@@ -27,7 +27,7 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 @RunWith(JUnit4::class)
 class ProductApiServiceTest {
     private lateinit var mockWebServer: MockWebServer
-    private lateinit var service: ProductsApiService
+    private lateinit var service: ProductsApi
 
     @Before
     fun createService() {
@@ -39,7 +39,7 @@ class ProductApiServiceTest {
         service = Retrofit.Builder()
             .addConverterFactory(MoshiConverterFactory.create(moshi))
             .baseUrl(mockWebServer.url("/"))
-            .build().create(ProductsApiService::class.java)
+            .build().create(ProductsApi::class.java)
 
     }
 
